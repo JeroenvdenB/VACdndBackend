@@ -34,7 +34,7 @@ public class FTPUploader {
 	public FTPUploader(){
 		Properties properties = new Properties();
 		try {
-			InputStream propertiesFile = new FileInputStream("src/main/resources/application.properties");
+			InputStream propertiesFile = new FileInputStream("/home/site/deployments/tools/src/main/resources/application.properties");
 			properties.load(propertiesFile);
 			this.server = properties.getProperty("ftp.server");
 			this.port = Integer.parseInt(properties.getProperty("ftp.port"));
