@@ -4,12 +4,15 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.SequenceGenerator;
 
 @Entity
 public class Blorbo {
+	@SequenceGenerator(name="defSequence", allocationSize=1)
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
-	long id;
+	@GeneratedValue(strategy=GenerationType.SEQUENCE, 
+					generator = "defSequence")
+	private long id;
 	
 	String name;
 
