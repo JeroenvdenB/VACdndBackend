@@ -15,7 +15,7 @@ public class Blorbo {
 	private long id;
 	
 	String name;
-s
+
 	public long getId() {
 		return id;
 	}
