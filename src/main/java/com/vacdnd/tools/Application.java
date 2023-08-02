@@ -2,7 +2,6 @@ package com.vacdnd.tools;
 
 import com.vacdnd.tools.util.FTPUploader;
 import com.vacdnd.tools.util.SpellListInitializer;
-import com.vacdnd.tools.util.propertyTest;
 import com.vacdnd.tools.util.FTPDownloader;
 import com.vacdnd.tools.domain.Spell;
 
@@ -17,9 +16,6 @@ public class Application {
 
 	public static void main(String[] args) {
 		SpringApplication.run(Application.class, args);
-		
-		propertyTest pt = new propertyTest();
-		pt.printProperty();
 		
 		// Testing file upload
 //		File inputFile = new File("D:/testfile.txt");
