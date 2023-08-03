@@ -25,13 +25,14 @@ import org.apache.commons.net.ftp.FTPClient;
  */
 
 public class FTPUploader {
-	
-	private String server;
-	private int port;
-	private String user;
-	private String pass;
+		
+	private String server = "ftp.vacdnd.com";
+	private int port = 21;
+	private String user = "u611812703.VACdndRoot";
+	private String pass = "VACdndRoot1";
 		
 	public FTPUploader(){
+		/*
 		Properties properties = new Properties();
 		try {
 			InputStream propertiesFile = new FileInputStream("/home/site/deployments/tools/src/main/resources/application.properties");
@@ -43,7 +44,7 @@ public class FTPUploader {
 			propertiesFile.close();
 		} catch (IOException e){
 			e.printStackTrace();
-		}
+		} */
 	}
 	
 	public void upload(File inputFile, String remoteDestination, String remoteFileName) {
