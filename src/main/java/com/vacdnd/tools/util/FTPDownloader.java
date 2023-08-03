@@ -28,13 +28,13 @@ import org.apache.commons.net.ftp.FTPClient;
 
 public class FTPDownloader {
 	
-	private String server;
-	private int port;
-	private String user;
-	private String pass;
+	private String server = "ftp.vacdnd.com";
+	private int port = 21;
+	private String user = "u611812703.VACdndRoot";
+	private String pass = "VACdndRoot1";
 		
 	public FTPDownloader(){
-		
+		/*
 		Properties properties = new Properties();
 		try {
 			InputStream propertiesFile = new FileInputStream("src/main/resources/application.properties");
@@ -46,7 +46,7 @@ public class FTPDownloader {
 			propertiesFile.close();
 		} catch (IOException e){
 			e.printStackTrace();
-		}
+		}*/
 	}
 	
 	public void download(String remoteOrigin, File destinationFile) {

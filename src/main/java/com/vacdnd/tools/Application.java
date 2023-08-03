@@ -4,7 +4,6 @@ import com.vacdnd.tools.util.FTPUploader;
 import com.vacdnd.tools.util.SpellListInitializer;
 import com.vacdnd.tools.util.FTPDownloader;
 import com.vacdnd.tools.domain.Spell;
-import com.vacdnd.tools.quicktest.Todo;
 
 import java.io.File;
 import java.io.IOException;
@@ -23,6 +22,7 @@ public class Application {
 	public static void main(String[] args) {
 		SpringApplication.run(Application.class, args);		
 		
+	
 		// Testing file upload
 //		File inputFile = new File("D:/testfile.txt");
 //		String remoteFileName = "testfile.txt";
@@ -52,18 +52,5 @@ public class Application {
 //		ini.helpme("All", 9);
 	}
 	
-	/*
-    @Bean
-    ApplicationListener<ApplicationReadyEvent> basicsApplicationListener(TodoRepository repository) {
-        return event->repository
-            .saveAll(Stream.of("A", "B", "C").map(name->new Todo("configuration", "congratulations, you have set up "
-                + "correctly!", true)).toList())
-            .forEach(System.out::println);
-    }
-    
-    interface TodoRepository extends JpaRepository<Todo, Long> {
-
-    }
-    */
-
+	
 }
