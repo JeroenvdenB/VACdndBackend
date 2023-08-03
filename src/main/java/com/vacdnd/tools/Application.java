@@ -52,6 +52,7 @@ public class Application {
 //		ini.helpme("All", 9);
 	}
 	
+	/*
     @Bean
     ApplicationListener<ApplicationReadyEvent> basicsApplicationListener(TodoRepository repository) {
         return event->repository
@@ -63,5 +64,6 @@ public class Application {
     interface TodoRepository extends JpaRepository<Todo, Long> {
 
     }
+    */
 
 }
