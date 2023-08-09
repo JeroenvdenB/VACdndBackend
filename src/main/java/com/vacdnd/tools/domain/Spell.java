@@ -110,14 +110,32 @@ public class Spell {
 			String newSpellLine = String.format("|[[spell:%s]] |//%s// |%s |%s |%s |%s |" , this.name, this.school,
 					castingTime, this.range, this.duration, shortComponents);
 			
+			//Check if the spell is already on the list. indexOf returns -1 if the string is not present.
+			int positionCheck = table.indexOf(String.format("|[[spell:%s]]", this.name));
+			if (positionCheck == -1) { //Spell is not yet on the list: add and sort
+				System.out.println("Spell is new to the list. Adding and sorting...");
+				table = table.concat(newSpellLine);
+				String[] tableLines = table.split("\n");
+				Arrays.sort(tableLines);
+				table = "";
+				for (int i=0; i<tableLines.length; i++) {
+					table = table.concat(tableLines[i] + "\n");
+				}		
+			} else { //Spell is on the list: identify position and replace line
+				System.out.println("Spell is already on the list. Updating line...");
+				String[] tableLines = table.split("\n");
+				REPLACE: for (int i=0; i<tableLines.length; i++) {
+					if (tableLines[i].contains(String.format("|[[spell:%s]]", this.name))) {
+						tableLines[i] = newSpellLine;
+						break REPLACE;
+					}
+				}
+				table = "";
+				for (int i=0; i<tableLines.length; i++) {
+					table = table.concat(tableLines[i] + "\n");
+				}	
+			}
 			
-			table = table.concat(newSpellLine);
-			String[] tableLines = table.split("\n");
-			Arrays.sort(tableLines);
-			table = "";
-			for (int i=0; i<tableLines.length; i++) {
-				table = table.concat(tableLines[i] + "\n");
-			}		
 			fileContent = headers + table;
 			
 			FileUtils.writeStringToFile(tempClassList, fileContent, Charset.forName("UTF-8"));
