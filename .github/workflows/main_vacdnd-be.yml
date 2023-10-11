@@ -24,6 +24,7 @@ jobs:
       - name: Build with Maven
         env:
           USERNAME: ${{ secrets.USERNAME }}
+          PASSWORD: ${{ secrets.PASSWORD }}
         run: mvn clean install -DskipTests
 
       - name: Upload artifact for deployment job
