@@ -15,6 +15,8 @@ public class BlorboRESTController {
 		blorbo.setName("Friend-shaped");
 		blorboRepository.save(blorbo);
 		
+		System.out.println("Blorbo was called successfully. It is friend-shaped :)");
+		
 		return "the blorbo endpoint worked and saved a db entry";
 	}
 }
