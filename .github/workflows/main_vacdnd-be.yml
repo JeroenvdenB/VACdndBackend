@@ -25,6 +25,7 @@ jobs:
         env:
           USERNAME: ${{ secrets.USERNAME }}
           PASSWORD: ${{ secrets.PASSWORD }}
+          VAC_DB_USERNAME: ${{ secrets.VAC_DB_USERNAME }}
         run: mvn clean install -DskipTests
 
       - name: Upload artifact for deployment job
