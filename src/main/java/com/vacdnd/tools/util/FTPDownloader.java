@@ -28,16 +28,20 @@ import org.apache.commons.net.ftp.FTPClient;
 
 public class FTPDownloader {
 	
-	private String server = "ftp.vacdnd.com";
-	private int port = 21;
-	private String user = "u611812703.VACdndRoot";
-	private String pass = "VACdndRoot1";
+	private String server;
+	private int port;
+	private String user;
+	private String pass;
 		
 	public FTPDownloader(){
-		/*
+		// Retrieve the path, for file structure may differ in deployments
+		String rootPath = Thread.currentThread().getContextClassLoader().getResource("").getPath();
+		String appConfigPath = rootPath + "application-local.properties";
+		
 		Properties properties = new Properties();
+		
 		try {
-			InputStream propertiesFile = new FileInputStream("src/main/resources/application.properties");
+			InputStream propertiesFile = new FileInputStream(appConfigPath);
 			properties.load(propertiesFile);
 			this.server = properties.getProperty("ftp.server");
 			this.port = Integer.parseInt(properties.getProperty("ftp.port"));
@@ -46,7 +50,7 @@ public class FTPDownloader {
 			propertiesFile.close();
 		} catch (IOException e){
 			e.printStackTrace();
-		}*/
+		}
 	}
 	
 	public void download(String remoteOrigin, File destinationFile) {
@@ -66,7 +70,7 @@ public class FTPDownloader {
 			if (done) {
 				System.out.println("File was downloaded successfully");
 			} else {
-				System.out.println("Something went wrong in the retrieveFile method.");
+				System.out.println("Something went wrong in the download method of FTPDownloader.");
 			}
 			
 		} catch (IOException e) {

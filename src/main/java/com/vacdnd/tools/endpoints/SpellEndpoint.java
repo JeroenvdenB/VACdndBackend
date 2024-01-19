@@ -59,20 +59,19 @@ public class SpellEndpoint {
 		
 		// Reminder: spell.description might need to be changed to get proper paragraphs. Try without
 		// modification first.
-		System.out.println(body.length);
 		String description = "";
 		for (int i=4 ; i < body.length; i++) {
-			System.out.println(body[i]);
 			if (body[i].contains("At Higher Levels.")) {
 				spell.higherLevels = body[i].substring(body[i].indexOf(".")+1).trim();
 			} else if(body[i].contains("Spell Lists.")) {
 				String spellLists = body[i].substring(body[i].indexOf(".")+1).trim();
 				if (spellLists.contains("(")) {
-					spellLists = spellLists.replaceAll("\\(([^\\)]+)\\)", ""); //Cut out anything between () 
+					spellLists = spellLists.replaceAll("\\((.*?)\\)", ""); // Regex: select anything between (), par included, non greedy
 				}
-				spell.lists = spellLists.split(", ");
-			} else if(body[i].length() > 1){ //empty lines should be skipped
-				description = description.concat(body[i]).concat("\n\n");
+				spellLists = spellLists.replaceAll("\\s*", ""); // Regex: remove any spaces
+				spell.lists = spellLists.split(",");
+			} else if(body[i].length() > 1){ // empty lines or spaces should be skipped
+				description = description.concat(body[i]).concat("\n\n"); // ensures correct spacing between paragraphs
 			}			
 		}
 		spell.description = description.trim();
@@ -81,21 +80,21 @@ public class SpellEndpoint {
 			spell.higherLevels = "N/A";
 		}
 		
-		// Check if all properties were set correctly
-		System.out.println(spell.name);
-		System.out.println(spell.school);
-		System.out.println(spell.level);
-		System.out.println(spell.castingTime);
-		System.out.println(spell.range);
-		System.out.println(spell.components);
-		System.out.println(spell.duration);
-		System.out.println(spell.description);
-		System.out.println(spell.higherLevels);
-		for (String line:spell.lists) {
-			System.out.println(line);
-		}
-		System.out.println(spell.source);
-		System.out.println(spell.ritual);
+//		// Check if all properties were set correctly
+//		System.out.println(spell.name);
+//		System.out.println(spell.school);
+//		System.out.println(spell.level);
+//		System.out.println(spell.castingTime);
+//		System.out.println(spell.range);
+//		System.out.println(spell.components);
+//		System.out.println(spell.duration);
+//		System.out.println(spell.description);
+//		System.out.println(spell.higherLevels);
+//		for (String line:spell.lists) {
+//			System.out.println(line);
+//		}
+//		System.out.println(spell.source);
+//		System.out.println(spell.ritual);
 		
 		String formattedSpell = SpellFormatter.formatSpell(spell);
 		spell.SpellUploader(formattedSpell);
