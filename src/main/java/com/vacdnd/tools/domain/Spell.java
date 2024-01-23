@@ -92,11 +92,13 @@ public class Spell {
 			String headers = fileContent.substring(0,fileContent.lastIndexOf('^')+2);
 			String table = fileContent.substring(fileContent.lastIndexOf('^')+2);
 			
-			//Components should be shortened for the overview table (materials only show as M).
+			// Components should be shortened for the overview table (materials only show as M).
+			// Remove (components) if present. Also remove a trailing comma, if present.
+			// The trailing comma can be an artifact of how the front-end assembles the spell
 			String shortComponents = this.components;
 			if (shortComponents.contains("(")) { //contains M (materials). Parenthesis need to be removed.
 				shortComponents = shortComponents.substring(0,this.components.lastIndexOf('('));
-			} else { //ends in "V, S, " or similar. Cut off at comma.
+			} else if (shortComponents.endsWith(",")) {
 				shortComponents = shortComponents.substring(0,this.components.lastIndexOf(','));
 			}
 			
