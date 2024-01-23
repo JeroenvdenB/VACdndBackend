@@ -4,9 +4,6 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.Properties;
-
-import javax.swing.Spring;
 
 import org.apache.commons.net.ftp.FTP;
 import org.apache.commons.net.ftp.FTPClient;
@@ -32,59 +29,16 @@ public class FTPUploader {
 	private int port;
 	private String user;
 	private String pass;
-	private String profile;
-		
-	public FTPUploader(){
-		// Retrieve the path, for file structure may differ in deployments
-		// ERROR: the two lines below did not work in the production environment. 
-		// That's what I get for using a getPath thing I'm unfamiliar with. 
-		// String rootPath = Thread.currentThread().getContextClassLoader().getResource("").getPath();
-		// String appProfilePath = rootPath + "application.properties";
-		
-		String rootPath = "src/main/resources";
-		String appProfilePath = rootPath + "/application.properties";
-		
-		Properties properties = new Properties();
-		
-		// Retrieve the active profile from application.properties
-		try {
-			InputStream profileFile = new FileInputStream(appProfilePath);
-			properties.load(profileFile);
-			this.profile = properties.getProperty("spring.profiles.active");
-			profileFile.close();
-		} catch (IOException e) {
-			System.out.println("An error occured in opening profileFile in FTPUploader");
-			e.printStackTrace();
-		}
-		
-		// Construct the path for the active properties file
-		//String appPropertiesPath = String.format("application-%.properties", profile); //Unknown error in format method due to period?	
-		String appPropertiesPath = rootPath + "/application-" + profile + ".properties";
-		System.out.println(appPropertiesPath);
-		
-		try {
-			InputStream propertiesFile = new FileInputStream(appPropertiesPath);
-			properties.load(propertiesFile);
-			this.server = properties.getProperty("ftp.server");
-			this.port = Integer.parseInt(properties.getProperty("ftp.port"));
-			this.user = properties.getProperty("ftp.user");
-			this.pass = properties.getProperty("ftp.pass");
-			propertiesFile.close();
-		} catch (IOException e){
-			System.out.println("An error occured in opening propertiesFile in FTPUploader");
-			e.printStackTrace();
-		} 
-		
-//		System.out.println("New FTPUploader object created\n"
-//				+ "Properties set as:"
-//				+ "\nserver: " + this.server
-//				+ "\nuser: " + this.user
-//				+ "\npass: " + this.pass);
-		
-	}
 	
-	public void upload(File inputFile, String remoteDestination, String remoteFileName) {
+	public FTPUploader(String server, String port, String user, String pass) {
+		this.server = server;
+		this.port = Integer.parseInt(port);
+		this.user = user;
+		this.pass = pass;
+	}
 		
+	public void upload(File inputFile, String remoteDestination, String remoteFileName) {
+				
 		FTPClient ftpClient = new FTPClient();
 		
 		try {
@@ -105,7 +59,7 @@ public class FTPUploader {
 				System.out.println("Problem in uploading the file.");
 			}
 		} catch (IOException e) {
-			System.out.println("Error: " + e.getMessage());
+			System.out.println("Error: in FTPUploader -> upload method" + e.getMessage());
 			e.printStackTrace();
 		} finally {
 			try {

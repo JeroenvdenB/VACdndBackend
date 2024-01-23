@@ -7,6 +7,9 @@ import java.io.InputStream;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -16,11 +19,35 @@ import com.vacdnd.tools.util.SpellFormatter;
 
 @RestController
 public class SpellEndpoint {
-
+	
+	// Set ftp credentials here with @Value, pass to SpellUploader method.
+	// @Value can't be used inside of the Spell object.
+	// Would be nice if I could autowire everything together properly but alas, I can't
+	@Value("${ftp.user}")
+	public String ftpUser;
+	
+	@Value("${ftp.pass}")
+	public String ftpPass;
+	
+	@Value("${ftp.server}")
+	public String ftpServer;
+	
+	@Value("${ftp.port}")
+	public String ftpPort;
+	
+	// An endpoint to confirm the @Value thing worked
+	@GetMapping("printCredentialsToTerminal")
+	public void credentials() {
+		System.out.println(this.ftpUser);
+		System.out.println(this.ftpPass);
+		System.out.println(this.ftpServer);
+		System.out.println(this.ftpPort);
+	}
+	
 	@PostMapping("addSpell")
 	public void addSpell(@RequestBody Spell spell) {
 		String formattedSpell = SpellFormatter.formatSpell(spell);
-		spell.SpellUploader(formattedSpell);
+		spell.SpellUploader(formattedSpell, ftpServer, ftpPort, ftpUser, ftpPass);
 	}
 	
 	@PostMapping("pastedSpell")
@@ -97,7 +124,7 @@ public class SpellEndpoint {
 //		System.out.println(spell.ritual);
 		
 		String formattedSpell = SpellFormatter.formatSpell(spell);
-		spell.SpellUploader(formattedSpell);
+		spell.SpellUploader(formattedSpell, ftpServer, ftpPort, ftpUser, ftpPass);
 	}
 
 }
