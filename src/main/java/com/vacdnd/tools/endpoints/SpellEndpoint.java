@@ -36,12 +36,15 @@ public class SpellEndpoint {
 	public String ftpPort;
 	
 	// An endpoint to confirm the @Value thing worked
-	@GetMapping("printCredentialsToTerminal")
-	public void credentials() {
+	@GetMapping("showCredentials")
+	public String credentials() {
 		System.out.println(this.ftpUser);
 		System.out.println(this.ftpPass);
 		System.out.println(this.ftpServer);
 		System.out.println(this.ftpPort);
+		
+		String credentials = this.ftpUser + " " + this.ftpPass + " " + this.ftpServer + " " + this.ftpPort;
+		return credentials;
 	}
 	
 	@PostMapping("addSpell")
