@@ -27,6 +27,8 @@ jobs:
           PASSWORD: ${{ secrets.PASSWORD }}
           VAC_DB_USERNAME: ${{ secrets.VAC_DB_USERNAME }}
           VAC_DB_PASSWORD: ${{ secrets.VAC_DB_PASSWORD }}
+          VAC_FTP_USER: ${{ secrets.VAC_FTP_USER }}
+          VAC_FTP_PASS: ${{ secrets.VAC_FTP_PASS }}
         run: mvn clean install -DskipTests
 
       - name: Upload artifact for deployment job
