@@ -55,6 +55,7 @@ public class FTPUploader {
 		// Construct the path for the active properties file
 		//String appPropertiesPath = String.format("application-%.properties", profile); //Unknown error in format method due to period?	
 		String appPropertiesPath = rootPath + "application-" + profile + ".properties";
+		System.out.println(appPropertiesPath);
 		
 		try {
 			InputStream propertiesFile = new FileInputStream(appPropertiesPath);
@@ -68,6 +69,12 @@ public class FTPUploader {
 			System.out.println("An error occured in opening propertiesFile in FTPUploader");
 			e.printStackTrace();
 		} 
+		
+//		System.out.println("New FTPUploader object created\n"
+//				+ "Properties set as:"
+//				+ "\nserver: " + this.server
+//				+ "\nuser: " + this.user
+//				+ "\npass: " + this.pass);
 		
 	}
 	
@@ -89,6 +96,8 @@ public class FTPUploader {
 			inputStream.close();
 			if (done) {
 				System.out.println("File uploaded successfully");
+			} else {
+				System.out.println("Problem in uploading the file.");
 			}
 		} catch (IOException e) {
 			System.out.println("Error: " + e.getMessage());
