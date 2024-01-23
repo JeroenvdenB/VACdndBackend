@@ -35,6 +35,9 @@ public class FTPUploader {
 		this.port = Integer.parseInt(port);
 		this.user = user;
 		this.pass = pass;
+		
+		System.out.println("FTPUploader constructor ran succesfully");
+		System.out.println("FTP credentials set as: " + this.server + " " + this.port + " " + this.user + " " + this.pass);
 	}
 		
 	public void upload(File inputFile, String remoteDestination, String remoteFileName) {
@@ -42,8 +45,8 @@ public class FTPUploader {
 		FTPClient ftpClient = new FTPClient();
 		
 		try {
-			ftpClient.connect(server, port);
-			ftpClient.login(user, pass);
+			ftpClient.connect(this.server, this.port);
+			ftpClient.login(this.user, this.pass);
 			ftpClient.enterLocalPassiveMode();
 			
 			ftpClient.setFileType(FTP.BINARY_FILE_TYPE);
@@ -56,10 +59,10 @@ public class FTPUploader {
 			if (done) {
 				System.out.println("File uploaded successfully");
 			} else {
-				System.out.println("Problem in uploading the file.");
+				System.out.println("FTPUploader -> upload method -> ftpClient does not report 'done' status");
 			}
 		} catch (IOException e) {
-			System.out.println("Error: in FTPUploader -> upload method" + e.getMessage());
+			System.out.println("IOException in FTPUploader -> upload method" + e.getMessage());
 			e.printStackTrace();
 		} finally {
 			try {
