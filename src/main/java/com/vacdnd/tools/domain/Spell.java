@@ -6,12 +6,14 @@ import java.nio.charset.Charset;
 import java.util.Arrays;
 
 import org.apache.commons.io.FileUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import com.vacdnd.tools.util.FTPUploader;
 import com.vacdnd.tools.util.FTPDownloader;
 
 public class Spell {
-	
+
 	public String name;
 	public String school;
 	public int level;
@@ -25,7 +27,7 @@ public class Spell {
 	public String source;
 	public boolean ritual;
 	
-	public void SpellUploader(String formattedSpell) {
+	public void SpellUploader(String formattedSpell, String server, String port, String user, String pass) {
 		/**
 		 * A method to upload the spell instance to the vacdnd.com dokuwiki file system. 
 		 * It accepts a formatted spell string, ready for upload, and will infer
@@ -49,18 +51,18 @@ public class Spell {
 			e.printStackTrace();
 		}
 				
-		FTPUploader uploader = new FTPUploader();
+		FTPUploader uploader = new FTPUploader(server, port, user, pass);
 		uploader.upload(tempSpellFile, "wiki/data/pages/spell", fileName);
 		tempSpellFile.delete();
 		
 		try {
-			SpellListUpdate(this.lists, this.level);
+			SpellListUpdate(this.lists, this.level, server, port, user, pass);
 		} catch (IOException e) {
 			System.out.println("Problem in SpellListUpdate, reading file to string.");
 		}
 	}
 	
-	public void SpellListUpdate(String[] dndClasses, int level) throws IOException {
+	public void SpellListUpdate(String[] dndClasses, int level, String server, String port, String user, String pass) throws IOException {
 		/**
 		 * A method to update new spells to existing spell lists in the dokuwiki file structure.
 		 * All file names and locations are highly dependent on this particular application.
@@ -72,7 +74,7 @@ public class Spell {
 		 * @author jvand
 		 */
 		
-		FTPDownloader downloader = new FTPDownloader();
+		FTPDownloader downloader = new FTPDownloader(server, port, user, pass);
 		
 		String[] classes = new String[dndClasses.length+1];
 		for (int i = 0; i<dndClasses.length; i++) {
@@ -142,7 +144,7 @@ public class Spell {
 			
 			FileUtils.writeStringToFile(tempClassList, fileContent, Charset.forName("UTF-8"));
 			
-			FTPUploader uploader = new FTPUploader();
+			FTPUploader uploader = new FTPUploader(server, port, user, pass);
 			String fileDestination = String.format("/public_html/wiki/data/pages/spells/%s/", dndClass.toLowerCase());
 			uploader.upload(tempClassList, fileDestination, String.format("lvl%d.txt", level));
 			

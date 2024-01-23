@@ -21,7 +21,7 @@ public class Item {
 	public String attunementComment;
 	public String description;
 	
-	public void ItemUploader(String formattedItem) {
+	public void ItemUploader(String formattedItem, String server, String port, String user, String pass) {
 		/**
 		 * A method to upload the item instance to the vacdnd.com dokuwiki file system. 
 		 * It accepts a formatted item string, ready for upload, and will infer
@@ -46,21 +46,21 @@ public class Item {
 			e.printStackTrace();
 		}
 		
-		FTPUploader uploader = new FTPUploader();
+		FTPUploader uploader = new FTPUploader(server, port, user, pass);
 		uploader.upload(tempItemFile, "wiki/data/pages/item", fileName);
 		tempItemFile.delete();
 		
 		try {
-			ItemListUpdate();
+			ItemListUpdate(server, port, user, pass);
 		}catch (IOException e) {
 			e.printStackTrace();
 		}
 		
 	}
 	
-	public void ItemListUpdate() throws IOException {
+	public void ItemListUpdate(String server, String port, String user, String pass) throws IOException {
 		
-		FTPDownloader downloader = new FTPDownloader();
+		FTPDownloader downloader = new FTPDownloader(server, port, user, pass);
 		
 		File tempItemList = new File("tempItemList.txt");
 		String targetFileName = this.rarity.toLowerCase().replaceAll(" ", "_").replaceAll("'", "_").replaceAll(",", "");
@@ -113,7 +113,7 @@ public class Item {
 		
 		FileUtils.writeStringToFile(tempItemList, fileContent, Charset.forName("UTF-8"));
 		
-		FTPUploader uploader = new FTPUploader();
+		FTPUploader uploader = new FTPUploader(server, port, user, pass);
 		String fileDestination ="/public_html/wiki/data/pages/itemlist";
 		uploader.upload(tempItemList, fileDestination, String.format("%s.txt", targetFileName));
 		
