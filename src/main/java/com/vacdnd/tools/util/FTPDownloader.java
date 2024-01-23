@@ -55,7 +55,7 @@ public class FTPDownloader {
 			if (done) {
 				System.out.println("File was downloaded successfully");
 			} else {
-				System.out.println("Something went wrong in the download method of FTPDownloader.");
+				System.out.println("FTPDownloader -> download method -> ftpClient does not report 'done'");
 			}
 			
 		} catch (IOException e) {
