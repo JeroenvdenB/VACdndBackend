@@ -36,8 +36,13 @@ public class FTPUploader {
 		
 	public FTPUploader(){
 		// Retrieve the path, for file structure may differ in deployments
-		String rootPath = Thread.currentThread().getContextClassLoader().getResource("").getPath();
-		String appProfilePath = rootPath + "application.properties";
+		// ERROR: the two lines below did not work in the production environment. 
+		// That's what I get for using a getPath thing I'm unfamiliar with. 
+		// String rootPath = Thread.currentThread().getContextClassLoader().getResource("").getPath();
+		// String appProfilePath = rootPath + "application.properties";
+		
+		String rootPath = "src/main/resources";
+		String appProfilePath = rootPath + "/application.properties";
 		
 		Properties properties = new Properties();
 		
@@ -54,7 +59,7 @@ public class FTPUploader {
 		
 		// Construct the path for the active properties file
 		//String appPropertiesPath = String.format("application-%.properties", profile); //Unknown error in format method due to period?	
-		String appPropertiesPath = rootPath + "application-" + profile + ".properties";
+		String appPropertiesPath = rootPath + "/application-" + profile + ".properties";
 		System.out.println(appPropertiesPath);
 		
 		try {
