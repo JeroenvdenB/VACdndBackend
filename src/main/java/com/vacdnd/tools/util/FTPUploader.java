@@ -35,9 +35,6 @@ public class FTPUploader {
 		this.port = Integer.parseInt(port);
 		this.user = user;
 		this.pass = pass;
-		
-		System.out.println("FTPUploader constructor ran succesfully");
-		System.out.println("inside upload method, credentials are seen as: " + this.server + " " + this.port + " " + this.user + " " + this.pass);
 	}
 		
 	public void upload(File inputFile, String remoteDestination, String remoteFileName) {
@@ -45,7 +42,6 @@ public class FTPUploader {
 		FTPClient ftpClient = new FTPClient();
 		
 		try {
-			System.out.println("inside upload method, credentials are seen as: " + this.server + " " + this.port + " " + this.user + " " + this.pass);
 			ftpClient.connect(this.server, this.port);
 			ftpClient.login(this.user, this.pass);
 			ftpClient.enterLocalPassiveMode();
