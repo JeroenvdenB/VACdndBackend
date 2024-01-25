@@ -59,11 +59,30 @@ public class SpellEndpoint {
 		Spell spell = new Spell();
 		String[] head = receivedSpell.substring(0, receivedSpell.indexOf("Casting Time")).split("\n");
 		spell.name = head[0].trim();
-		spell.source = head[1].substring(head[1].indexOf("Source:")+7).trim();
 		
+		// The location of the source can vary how the browser copy-pastes. That's why I search for it.
+		int sourceLineNumber = 0; // So the next search-loop can continue where this one stopped.
+		SEARCHSOURCE: for (int i = 1; i < head.length; i++) {
+			if (head[1].contains("Source:")) {
+				spell.source = head[i].substring(head[i].indexOf("Source:")+7).trim();
+				sourceLineNumber = i;
+				break SEARCHSOURCE;
+			}			
+		}
+		
+		// Location of the school and level can vary too.
+		int schoolLineIndex = 0;
+		SEARCHSCHOOL: for (int i = sourceLineNumber; i < head.length; i++) {
+			if(head[i].contains("cantrip") || head[i].contains("level")) { // That's the line I'm looking for
+				schoolLineIndex = i;
+				break SEARCHSCHOOL;
+			}
+		}
+		
+			
 		// Cantrips state "school [space] cantrip"
 		// Leveled spells state "[number]rd-level [space] school"
-		String[] schoolAndLevel = head[3].split(" ");
+		String [] schoolAndLevel = head[schoolLineIndex].split(" ");	
 		if (schoolAndLevel[1].equals("cantrip")) {
 			spell.school = schoolAndLevel[0].toLowerCase();
 			spell.level = 0;	
