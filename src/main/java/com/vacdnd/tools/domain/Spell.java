@@ -40,8 +40,11 @@ public class Spell {
 		 * @author jvand
 		 */
 				
-		//Dokuwiki pages are all lower case without spaces. This makes a file name.
+		// Dokuwiki pages are all lower case without spaces. This makes a file name.
+		// The ' character (single quote) doesn't work in URL's. Turn this into a lower dash too.
 		String fileName = this.name.toLowerCase().replaceAll(" ", "_") + ".txt";
+		fileName = fileName.replaceAll("'", "_");
+		System.out.println("Spell file name generated as: " + fileName);
 				
 		File tempSpellFile = new File(fileName); //Don't forget to delete this again
 				

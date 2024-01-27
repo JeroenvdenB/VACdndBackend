@@ -36,16 +36,16 @@ public class SpellEndpoint {
 	public String ftpPort;
 	
 	// An endpoint to confirm the @Value thing worked
-	@GetMapping("showCredentials")
-	public String credentials() {
-		System.out.println(this.ftpUser);
-		System.out.println(this.ftpPass);
-		System.out.println(this.ftpServer);
-		System.out.println(this.ftpPort);
-		
-		String credentials = this.ftpUser + " " + this.ftpPass + " " + this.ftpServer + " " + this.ftpPort;
-		return credentials;
-	}
+//	@GetMapping("showCredentials")
+//	public String credentials() {
+//		System.out.println(this.ftpUser);
+//		System.out.println(this.ftpPass);
+//		System.out.println(this.ftpServer);
+//		System.out.println(this.ftpPort);
+//		
+//		String credentials = this.ftpUser + " " + this.ftpPass + " " + this.ftpServer + " " + this.ftpPort;
+//		return credentials;
+//	}
 	
 	@PostMapping("addSpell")
 	public void addSpell(@RequestBody Spell spell) {
@@ -62,12 +62,12 @@ public class SpellEndpoint {
 		
 		// The location of the source can vary how the browser copy-pastes. That's why I search for it.
 		int sourceLineNumber = 0; // So the next search-loop can continue where this one stopped.
-		SEARCHSOURCE: for (int i = 1; i < head.length; i++) {
-			if (head[1].contains("Source:")) {
+		SEARCHSOURCE: for (int i = 0; i < head.length; i++) {
+			if (head[i].contains("Source:")) {
 				spell.source = head[i].substring(head[i].indexOf("Source:")+7).trim();
 				sourceLineNumber = i;
 				break SEARCHSOURCE;
-			}			
+			}		
 		}
 		
 		// Location of the school and level can vary too.
