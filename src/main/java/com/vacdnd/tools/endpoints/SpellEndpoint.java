@@ -60,6 +60,11 @@ public class SpellEndpoint {
 		String[] head = receivedSpell.substring(0, receivedSpell.indexOf("Casting Time")).split("\n");
 		spell.name = head[0].trim();
 		
+		// Debugging option to show all the lines in head
+//		for (int i=0; i <head.length; i++) {
+//			System.out.println("line " + i + ": " + head[i]);
+//		}
+		
 		// The location of the source can vary how the browser copy-pastes. That's why I search for it.
 		int sourceLineNumber = 0; // So the next search-loop can continue where this one stopped.
 		SEARCHSOURCE: for (int i = 0; i < head.length; i++) {
@@ -73,7 +78,8 @@ public class SpellEndpoint {
 		// Location of the school and level can vary too.
 		int schoolLineIndex = 0;
 		SEARCHSCHOOL: for (int i = sourceLineNumber; i < head.length; i++) {
-			if(head[i].contains("cantrip") || head[i].contains("level")) { // That's the line I'm looking for
+			System.out.println("School and level searching in head, line: " +i);
+			if(head[i].toLowerCase().contains("cantrip") || head[i].toLowerCase().contains("level")) { // That's the line I'm looking for
 				schoolLineIndex = i;
 				break SEARCHSCHOOL;
 			}
@@ -129,7 +135,7 @@ public class SpellEndpoint {
 			spell.higherLevels = "N/A";
 		}
 		
-//		// Check if all properties were set correctly
+		// Check if all properties were set correctly
 //		System.out.println(spell.name);
 //		System.out.println(spell.school);
 //		System.out.println(spell.level);
