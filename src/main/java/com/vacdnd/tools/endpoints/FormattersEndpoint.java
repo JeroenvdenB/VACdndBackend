@@ -10,11 +10,6 @@ import static com.vacdnd.tools.util.TableFormatter.formatTable;
 @RestController
 public class FormattersEndpoint {
 	
-	@GetMapping("test")
-	public String teststring(){
-		return "Test endpoint";
-	}
-	
 	@PostMapping("echo")
 	public String echo(@RequestBody String input) {
 		System.out.println("Echo endpoint recieved: " + input);

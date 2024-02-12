@@ -16,7 +16,7 @@ public class User {
 					generator="defSequence")
 	private long id;
 	
-	private String username;
+	private String email;
 	private String password;
 	
 	public void encrypt() {
@@ -26,18 +26,18 @@ public class User {
 		BCrypt.Result result = BCrypt.verifyer().verify(password.toCharArray(), this.password);
 		return result.verified;
 	}
-	
+		
 	public long getId() {
 		return id;
 	}
 	public void setId(long id) {
 		this.id = id;
 	}
-	public String getUsername() {
-		return username;
+	public String getEmail() {
+		return email;
 	}
-	public void setUsername(String username) {
-		this.username = username;
+	public void setEmail(String email) {
+		this.email = email;
 	}
 	public String getPassword() {
 		return password;
