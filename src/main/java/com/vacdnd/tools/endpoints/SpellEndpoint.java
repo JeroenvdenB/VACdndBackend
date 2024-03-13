@@ -13,7 +13,7 @@ public class SpellEndpoint {
 	
 	// Set ftp credentials here with @Value, pass to SpellUploader method.
 	// @Value can't be used inside of the Spell object.
-	// Would be nice if I could autowire everything together properly but alas, I can't
+	// Would be nice if I could autowire everything together properly but alas, I don't know how
 	@Value("${ftp.user}")
 	public String ftpUser;
 	

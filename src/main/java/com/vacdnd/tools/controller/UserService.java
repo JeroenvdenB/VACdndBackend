@@ -1,5 +1,7 @@
 package com.vacdnd.tools.controller;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,8 +16,8 @@ public class UserService {
 		userRepository.save(user);
 	}
 
-	public Iterable<User> getUser(String email) {
-		return userRepository.getUser(email);
+	public Optional<User> getUserByEmail(String email) {
+		return userRepository.getUserByEmail(email);
 	}
 	
 }

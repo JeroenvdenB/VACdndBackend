@@ -1,6 +1,7 @@
 package com.vacdnd.tools.controller;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
@@ -12,5 +13,5 @@ import com.vacdnd.tools.domain.RegistrationKey;
 public interface RegistrationKeyRepository extends CrudRepository<RegistrationKey, Long> {
 	
 	@Query(value = "SELECT * FROM Registration_key WHERE code = ?1", nativeQuery = true)
-	List<RegistrationKey> getRegKey(String code);
+	Optional<RegistrationKey> findByCode(String code);
 }
